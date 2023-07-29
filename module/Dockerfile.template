@@ -10,19 +10,24 @@ RUN apt-get update && \
     flex \
     libelf-dev \
     libssl-dev \
-    wget
+    wget \
+    git
 
 WORKDIR /usr/src/app
 
+ARG DRV_DIR=drv
 ARG SRC_DIR=src
 ARG OUT_DIR=out
 ARG OS_VERSION
+ARG GITTOKEN
 
-COPY src $SRC_DIR/
+#COPY src $SRC_DIR/
 COPY include include/
 COPY build.sh .
 COPY load.sh .
 COPY workarounds.sh .
+RUN git clone -b master --single-branch https://${GITTOKEN}@github.com/DeGirum/lincdadrv.git $DRV_DIR
+RUN ln -rs $DRV_DIR/src $SRC_DIR
 RUN ./build.sh -s %%BALENA_MACHINE_NAME%% -v $OS_VERSION -i $SRC_DIR -o $OUT_DIR
 
 FROM alpine

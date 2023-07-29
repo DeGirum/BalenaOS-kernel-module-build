@@ -1,7 +1,13 @@
 #!/usr/bin/env sh
 
-if dmesg | grep -q "Hello World!"; then
+if lsmod | grep -q "cdapci"; then
 	echo "Module correctly loaded"
+	if [ -e '/dev/cda00' ]; then
+		echo "ORCA device found and the driver binded to it"
+	else
+		echo "No ORCA device found!"
+		exit 1
+	fi
 else
 	echo "Something went wrong!"
 	exit 1

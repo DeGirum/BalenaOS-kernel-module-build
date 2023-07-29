@@ -6,8 +6,8 @@ echo "OS Version is $OS_VERSION"
 # if that's the case, replace the loop below with a list of
 # `insmod $mod_dir/<module>.ko` commands in the right order
 for file in "$MOD_PATH"/*.ko; do
-	if lsmod | grep -q hello; then
-		rmmod hello
+	if lsmod | grep -q cdapci; then
+		rmmod cdapci
 	fi
 	echo Loading module from "$file"
 	insmod "$file"

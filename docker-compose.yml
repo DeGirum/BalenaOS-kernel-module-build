@@ -7,10 +7,13 @@ services:
       dockerfile: Dockerfile.template
       args:
         # Modify to the desired balenaOS version
-        OS_VERSION: 2.108.27
+        OS_VERSION: 2.112.12
+        # Modify to the git token for the lincdadrv repository
+        GITTOKEN: ghp_REPLACEBYYOURTOKEN
     privileged: true
     restart: on-failure
   check:
+    privileged: true
     build:
       context: ./check
       dockerfile: Dockerfile.template
